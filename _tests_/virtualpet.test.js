@@ -1,11 +1,12 @@
 const { 
-    petExists
-} = require('../src/virtualpet');
+    Pet
+} = require('../src/virtualpet.js');
 
-describe('petExists', () => {
-    it('returns true if pet exists', () => {
-        expect(petExists).toEqual(true);
-
-
-    })  
-})
+describe('Pet', () => {
+  it('returns a pet with a name', () => {
+    const newPet = new Pet('Fido');
+    expect(newPet).toEqual({
+      name: 'Fido',
+    });
+  });
+});
