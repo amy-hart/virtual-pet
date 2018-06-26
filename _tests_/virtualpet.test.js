@@ -3,40 +3,26 @@ const {
 } = require('../src/virtualpet.js');
 
 describe('Pet', () => {
-  it('Returns a pet with the correct given name', () => {
+  it('Returns a pet with the correct properties', () => {
     const newPet = new Pet('Fido');
     expect(newPet.name).toEqual('Fido');
-  });
-  it('Returns a pet with the starting age of 0', () => {
-    const newPet = new Pet("Fido");
     expect(newPet.age).toEqual(0);
-  });
-  it('Returns a pet with the hunger level of 0', () => {
-    const newPet = new Pet("Fido");
     expect(newPet.hunger).toEqual(0);
-  });
-  it('Returns a pet with the fitness level of 10', () => {
-    const newPet = new Pet("Fido");
     expect(newPet.fitness).toEqual(10);
   });
-  it('Increments age by 1', () => {
+});
+
+describe('growUp', () => {
+  it('Increments age by 1, increments hunger by 5, and decrements fitness by 3', () => {
     const newPet = new Pet("Fido");
     newPet.growUp();
     expect(newPet.age).toEqual(1);
-  });
-  it('Increments hunger by 1', () => {
-    const newPet = new Pet("Fido");
-    newPet.growUp();
     expect(newPet.hunger).toEqual(5);
-  });
-  it('Decrement fitness by 3', () => {
-    const newPet = new Pet("Fido");
-    newPet.growUp();
     expect(newPet.fitness).toEqual(7);
   });
 });
 
-describe('Walk', () => {
+describe('walk', () => {
 	it('Increments fitness by 4, and caps fitness at 10', () => {
 	    const jim = new Pet("Fido");
 	    jim.fitness = 10;
@@ -61,7 +47,7 @@ describe('Walk', () => {
   });
 });
 
-describe('Feed', () => {
+describe('feed', () => {
 	it('Decrements hunger by 3, and caps hunger at 0', () => {
 	    const jim = new Pet("Fido");
 	    jim.hunger = 0;
@@ -75,3 +61,92 @@ describe('Feed', () => {
     expect(bob.hunger).toEqual(2);
   });
 });
+
+describe('checkUp', () => {
+  it('Tells the owner what action they need to take according to the pets current status', () => {
+
+    // Testing first if statement
+  
+    // Triggers "I need a walk"
+    const jim = new Pet("Jim");
+    jim.fitness = 2;
+    jim.hunger = 4;
+    jim.checkUp();  
+
+    // Triggers "I am hungry" 
+    const rob = new Pet("Rob");
+    rob.fitness = 4;
+    rob.hunger = 6;
+    rob.checkUp();
+
+    // Testing third and fourth if statements
+    // Triggers "I am hungry AND I need a walk"
+    const bob = new Pet("Bob");
+    bob.fitness = 3;
+    bob.hunger = 5;
+    bob.checkUp();
+
+    // Triggers "I am hungry AND I need a walk"
+    const mavis = new Pet("Mavis");
+    mavis.fitness = 2;
+    mavis.hunger = 6;
+    mavis.checkUp();
+
+    // Triggers fourth resposne
+    // Triggers "I feel great!"
+    const ken = new Pet("Ken");
+    ken.fitness = 4;
+    ken.hunger = 4;
+    ken.checkUp();
+
+    expect(jim.fitness <= 3).toBe(true) && expect(jim.hunger >= 5).toBe(false);
+    expect(rob.fitness <= 3).toBe(false) && expect(rob.hunger >= 5).toBe(true);
+    expect(bob.fitness <= 3).toBe(true) && expect(bob.hunger >= 5).toBe(true);
+    expect(mavis.fitness <= 3).toBe(true) && expect(mavis.hunger >= 5).toBe(true);
+    expect(ken.fitness <= 3).toBe(false) && expect(ken.hunger >= 5).toBe(false);    
+  }); 
+});
+
+describe('isAlive', () => {
+  it('Checks if the pet is DOA', () => {
+
+    // Pet dies of poor fitness
+    const jim = new Pet("Jim");
+    jim.fitness = 0;
+    jim.hunger = 9;
+    jim.age = 29;
+
+    // Pet dies of hunger
+    const rob = new Pet("Rob");
+    rob.fitness = 4;
+    rob.hunger = 11;
+    rob.age = 29;
+
+    // Pet dies from old age
+    const bob = new Pet("Bob");
+    bob.fitness = 1;
+    bob.hunger = 9;
+    bob.age = 30;
+
+    // Pet dies from hunger and old age
+    const mavis = new Pet("Mavis");
+    mavis.fitness = 5;
+    mavis.hunger = 11;
+    mavis.age = 30;
+
+    // Pet lives
+    const ken = new Pet("Ken");
+    ken.fitness = 7;
+    ken.hunger = 4;
+    ken.age = 12;
+
+    expect(jim.isAlive).toBe(false);
+    expect(rob.isAlive).toBe(false);
+    expect(bob.isAlive).toBe(false);
+    expect(mavis.isAlive).toBe(false);
+    expect(ken.isAlive).toBe(true);    
+  }); 
+});
+
+
+
