@@ -5,6 +5,7 @@ function Pet(name){
 	this.age = 0,
 	this.hunger = 0,
 	this.fitness = 10
+	this.children = [];
 }
 
 Pet.prototype = {
@@ -62,7 +63,10 @@ Pet.prototype = {
 		}else{
 			console.log("Error: Unable to checkup on pet");
 		}
-	}
+	},
+	adoptChild: function(childName){
+		console.log(childName);
+	} 		
 }
 
 module.exports = {
