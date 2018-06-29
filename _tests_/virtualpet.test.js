@@ -1,6 +1,4 @@
-const { 
-    Pet
-} = require('../src/virtualpet.js');
+const {Pet} = require('../src/virtualpet.js');
 
 describe('Pet', () => {
   it('Returns a pet with the correct properties', () => {
@@ -145,6 +143,16 @@ describe('isAlive', () => {
     expect(bob.isAlive).toBe(false);
     expect(mavis.isAlive).toBe(false);
     expect(ken.isAlive).toBe(true);    
+  }); 
+});
+
+describe('adoptChild', () => {
+  it('Checks if the pet is DOA', () => {
+    const parent = new Pet("Jack");
+    const child = new Pet("Joanie");
+    parent.adoptChild(child);
+  
+    expect(parent.children).toEqual([{ name: 'Joanie', age: 0, hunger: 0, fitness: 10, children: [] }]); 
   }); 
 });
 
