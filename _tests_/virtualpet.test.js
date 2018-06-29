@@ -19,6 +19,10 @@ describe('Pet', () => {
     const newPet = new Pet("Fido");
     expect(newPet.fitness).toEqual(10);
   });
+   it('Returns a pet with a status of alive', () => {
+    const newPet = new Pet("Fido");
+    expect(newPet.isAlive).toEqual(true);
+  });
   it('Increments age by 1', () => {
     const newPet = new Pet("Fido");
     newPet.growUp();
